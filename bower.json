@@ -1,0 +1,18 @@
+{
+  "name": "gymday_assingment",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "GaganSuneja <gagan91suneja@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

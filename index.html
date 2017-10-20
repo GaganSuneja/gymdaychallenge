@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Gymday Challenge"/>
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<link rel="canonical" href="http://example.com/2017/09/a-new-article-to-red.html"/>
+
+	<title>Gymday</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/fw/css/font-awesome.css">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/appconfig.js"></script>
+	<script src="js/servicefactory.js"></script>
+	<script src="js/usersfactory.js"></script>
+	<script src="js/checkoutfactory.js"></script>
+	<script src="js/userscontroller.js"></script>
+	<script src="js/servicecontroller.js"></script>
+</body>
+	<script type="text/javascript">
+		var _service = servicefactory();
+
+		console.log(
+			_service
+			);
+		var _user = usersfactory();
+	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body  ng-app="gymdayapp">
+<!-- Header for homepage-->
+<div class="gymday__header">
+	<div class="gymday__header_logo">
+		<h3>Gym Day<h3>
+		<i class="fa fa-gym"></i>
+	</div>
+
+	<div ng-controller="userscontroller as user1"  class="gymday__header_searchbar">
+		<input placeholder="Search here" type="text" name="" class="gymday__header_input">
+	</div>	
+	<div class="gymday__header_userprofile">
+		<ul>
+			<li>Monday,December 23</li>
+			<li><i class="fa fa-user" aria-hidden="true"></i></li>
+		</ul>
+	</div>	
+</div>
+<!-- Content Section-->
+<div class="gymday__content">
+	
+	<div class="gymday__content_sidebar">
+		
+		<div class="gymday__content_sidebar_heading">
+			<span>Fitness First</span>
+			<span class="gymday__content_sidebar_heading_carat"><i class="fa fa-caret-left" aria-hidden="true"></i></span>
+			<p>Lorem ipsum</p>
+		</div>
+		
+		<div class="gymday__content_sidebar_options">
+			 <ul>
+			 	<li class="gymday__content_sidebar_option_types">
+			 		<i class="fa fa-cart-plus gymday__content_icons" aria-hidden="true"></i>
+			 		<span class="">Point Of Sale</span>
+			 	</li>
+			 	<li class="gymday__content_sidebar_option_types">
+			 		<i class="fa fa-bolt gymday__content_icons" aria-hidden="true"></i>
+			 		<span>Dashboard</span>
+			 	</li>
+			 	<li class="gymday__content_sidebar_option_types">
+			 		<i class="fa fa-cart-plus gymday__content_icons" aria-hidden="true"></i>
+			 		<span>Customers</span>
+			 	</li>
+			 	<li class="gymday__content_sidebar_option_types">
+			 		<i class="fa fa-cart-plus gymday__content_icons" aria-hidden="true"></i>
+			 		<span>Marketing</span>
+			 	</li>
+			 </ul>	
+			 
+		</div>
+		
+		<div class="gymday__content_sidebar_address">
+			<p>Bf-15 </p>
+			<p>third Floor </p>
+			<p>Tagore Garden Extension </p>
+			<p>New Delhi 110027	</p>
+		</div>
+		
+		<div class="gymday__content_sidebar_support">
+			<p>support@gymday.in</p>
+		</div>
+
+	</div>	
+	<div ng-controller = "userscontroller" class="gymday__content_head">
+			<div class="gymday__content_heading">
+				<ul>
+					<li>Point Of Sale</li>
+					<li>Billing History</li>
+				</ul>
+			</div>
+            
+            <div ng-class="{'gymday__content_search':true,
+							'gymday__visibility_visible':searchbarvisibility,
+							'gymday__visibility_hidden' :!searchbarvisibility
+						   }">
+				 <input type="text" ng-keypress="showsearchresults()" ng-model="searchanymodel" class="gymday__content_search_input" name="search" placeholder="Search Here">
+				<i class="fa fa-search gymday__content_search_icon" aria-hidden="true"></i>
+			</div>
+			
+			<div ng-class="{'gymday__content_search_results':true,
+							'gymday__visibility_visible':searchvisibility,
+							'gymday__visibility_hidden' :!searchvisibility
+						   }">
+				
+				<div class="gymday_result_cross" ng-click="closesearchresults()"><i class="fa fa-times" aria-hidden="true"></i></div>
+				
+				<ul ng-repeat="u in users.list|filter:searchanymodel" class="gymday__content_search_resultlist">
+					
+					<li ng-click="selectresult(u)">
+						<span class="gymday__content_search_resultlist_icon">
+						<i 
+						class="fa" 
+						ng-class="{'fa-circle':u.status===0||u.status===1||u.status===2,
+								   'fa-star'          :u.status===3||u.status===4,
+								   'gymday__icon_red':u.status===0,
+								   'gymday__icon_green':u.status===1,
+								   'gymday__icon_grey':u.status===2,
+								   'gymday__icon_yellow':u.status===3||u.status===4
+								   }" 
+						
+						aria-hidden="true"></i>
+						</span>
+						<span class="gymday__content_search_resultlist_membername">{{
+						u.firstname +" " + u.lastname|uppercase
+						}}</span>
+						<span class="gymday__content_search_resultlist_memberstatus">{{u.type}}</span>
+						<p class="gymday__content_search_resultlist_membernumber">{{u.phone}}</p>
+					</li>
+				</ul>
+			</div>
+			<div ng-class="{'gymday__content_search_finalresult':true,
+							'gymday__visibility_visible':finalresultvisibility,
+							'gymday__visibility_hidden' :!finalresultvisibility
+						   }">
+					<span class="gymday__content_search_finalresult_name">{{selecteduser.firstname +" " + selecteduser.lastname|uppercase}}</span>
+					<span class="gymday__content_search_finalresult_cross"><i ng-click = "backtoinitial()" class="fa fa-times"></i></span>
+					<p class="gymday__content_search_finalresult_number">{{selecteduser.phone}}</p>	
+			</div>
+			<div ng-controller="servicecontroller">
+			<div  class="gymday__content_plans">
+					<p class="gymday__content_plans_head">PLAN</p>
+					<div class="gymday__content_plans_categories">
+						<ul>
+						
+							<li ng-repeat="servicetype in services.servicesname"
+								style="cursor:pointer" 
+								ng-click = "selectservicetype(servicetype)" 
+							>{{servicetype|uppercase}}
+						
+							</li>
+						</ul>
+					</div>
+					<div class="gymday__content_plans_inset">
+						<div class="gymday__content_plans_inset_plans">
+							<ul>
+								
+								<li ng-repeat="serviceplan in services.plans"
+								    ng-click = "selectplan(serviceplan)"
+									style="cursor:pointer"
+								     >
+								     {{serviceplan|uppercase}}
+								
+								</li>
+							</ul>
+
+					    </div>
+					    <div class="gymday__content_plans_inset_plandetails">
+							<table class="gymday__content_plans_inset_plandetails_table">
+								
+								<tr ng-click="select_final_plan(planrates)"
+
+								    ng-repeat="planrates in selectedservice.current_service" 
+								    
+								    class="gymday__content_plans_inset_plandetails_table_row"
+									
+									style="cursor:pointer"
+								    >	
+									
+
+									<td col-span="3" class="gymday__content_plans_inset_plandetails_table_col"> 
+									
+									 {{ planrates.months + "   Months" }}
+									
+									 </td>
+									
+									<td col-span="1" class="gymday__content_plans_inset_plandetails_table_col">
+									 Rs {{ planrates.rate }}
+									
+									</td>
+								
+								</tr>								
+							</table>
+						</div>
+					</div>
+					<div class="gymday__content_plans_discount_card">
+						<select ng-change="showupdiscount()" ng-model="show" class="gymday__content_plans_discount_card_options">
+							
+							<option   style="cursor:pointer" ng-repeat="offer in offers">
+								
+								{{    offer|uppercase }}
+								
+							</option>
+					
+						</select>
+					</div>
+			</div>
+			<div class="gymday__content_plans_ratecard">
+					<div class="gymday__content_plans_ratecard_header">
+						<span>PLAN</span>
+						<span>Price</span>
+					</div>
+				<div style="height:40%;overflow-y: auto">	
+					<div ng-repeat="checkins in finalcheckouts" class="gymday__content_plans_ratecard_planselected">
+						<span> {{ checkins.servicetype}}</span>					
+						<span> {{ checkins.plan.rate }}<i class="fa fa-minus-circle" aria-hidden="true"></i> </span>
+						<p> {{checkins.plancategory}}</p>
+						
+						<div ng-if="checkins.discount" class="gymday__content_plans_ratecard_offer">
+							<div class="gymday__content_plans_ratecard_offer_code">Offer {{checkins.discount[0].text}}</div>
+							<span style="color:white">{{checkins.discount[1].discountpercent}}<i class="fa fa-minus-circle" aria-hidden="true"></i></span>
+						</div>		
+					</div>	
+				</div>
+				<div class="gymday__content_plans_ratecard_billing">
+					 <table class="gymday__content_plans_ratecard_billing_table">
+					 	<tr class="gymday__content_plans_ratecard_billing_table_subtotal">
+					 		<td>Subtotal</td>
+					 		<td>gagan</td>
+					 	</tr>
+					 	<tr>
+					 		<td>Security</td>
+					 		<td>4545</td>
+					 	</tr>
+					 	<tr>
+					 		<td>Deposit</td>
+					 		<td>5656</td>
+					 	</tr>
+					 </table>				
+				</div>
+				<div class="gymday__content_plans_ratecard_finalbill">
+					<div class="gymday__content_plans_ratecard_finalbill_amount">
+						<p>Rs 8400</p>
+						<p>Total Amount to be Payed</p>
+					</div>
+					<div class="gymday__content_plans_ratecard_finalbill_actionbutton">
+						<div class="gymday__content_plans_ratecard_finalbill_actionbutton_cancelbutton">
+							submit
+						</div>
+						<div class="gymday__content_plans_ratecard_finalbill_actionbutton_receivedbutton">
+							<p>YES RECEIVED</p>
+						</div>
+					</div>
+				</div>		
+			</div>
+			</div>
+	</div>
+</div>
+
+</html>
